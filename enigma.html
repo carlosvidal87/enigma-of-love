@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio Dia dos Namorados</title>
+  <style>
+    /* Reset básico */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Paleta inspirada no modo escuro do ChatGPT */
+    :root {
+      --bg: #1e1f24;
+      --panel: #2c2d36;
+      --border: #3a3b45;
+      --text: #d1d1d6;
+      --heading: #ffffff;
+      --input-bg: #1f2026;
+      --btn-bg: #2563eb;
+      --btn-bg-hover: #3b82f6;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto; /* centraliza horizontalmente */
+      text-align: center;
+    }
+    .active { display: block; }
+
+    h1, h2 { color: var(--heading); margin-bottom: 16px; }
+
+    .content {
+      background-color: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: contain;
+      margin: 12px 0 20px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    button {
+      margin-top: 14px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--btn-bg);
+      color: #ffffff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+    }
+    button:hover { background-color: var(--btn-bg-hover); }
+  </style>
+</head>
+<body>
+  <!-- Página inicial -->
+  <div id="start-page" class="page active">
+    <h1>Desafio Dia&nbsp;dos&nbsp;Namorados</h1>
+    <div class="content">
+      <p style="margin-bottom:20px;">Achou mesmo que era só isso, né?</p>
+      <button id="start-btn">Começar</button>
+    </div>
+  </div>
+
+  <!-- Enigma 1 -->
+  <div id="enigma1-page" class="page">
+    <h2>Enigma&nbsp;1</h2>
+    <div class="content">
+      <img src="enigma1.jpg" alt="Enigma 1">
+      <input id="ans1" type="text" autocomplete="off" placeholder="Digite sua resposta">
+      <button id="btn1">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Enigma 2 -->
+  <div id="enigma2-page" class="page">
+    <h2>Enigma&nbsp;2</h2>
+    <div class="content">
+      <img src="enigma2.jpg" alt="Enigma 2">
+      <input id="ans2" type="text" autocomplete="off" placeholder="Digite sua resposta">
+      <button id="btn2">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Enigma 3 -->
+  <div id="enigma3-page" class="page">
+    <h2>Enigma&nbsp;3</h2>
+    <div class="content">
+      <img src="enigma3.jpg" alt="Enigma 3">
+      <input id="ans3" type="text" autocomplete="off" placeholder="Digite sua resposta">
+      <button id="btn3">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Página final -->
+  <div id="final-page" class="page">
+    <h2>Parabéns!</h2>
+    <div class="content">
+      <p>Agora, olhe bem a carta para encontrar seu prêmio final.</p>
+    </div>
+  </div>
+
+  <script>
+    const pages = ["start", "enigma1", "enigma2", "enigma3", "final"];
+    const answers = { enigma1: "VIAGEM", enigma2: "GILMORE", enigma3: "ABRIGO" };
+
+    function show(page) {
+      pages.forEach(p => document.getElementById(`${p}-page`).classList.remove("active"));
+      document.getElementById(`${page}-page`).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.getElementById("start-btn").onclick = () => show("enigma1");
+
+    document.getElementById("btn1").onclick = () => validate("enigma1", "enigma2");
+    document.getElementById("btn2").onclick = () => validate("enigma2", "enigma3");
+    document.getElementById("btn3").onclick = () => validate("enigma3", "final");
+
+    function validate(current, next) {
+      const input = document.querySelector(`#${current}-page input`).value.trim().toUpperCase();
+      if (input === answers[current]) {
+        show(next);
+      } else {
+        alert("Resposta incorreta. Tente novamente.");
+      }
+    }
+  </script>
+</body>
+</html>
